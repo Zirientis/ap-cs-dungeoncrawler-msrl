@@ -36,6 +36,7 @@ public class Room
                     constData[row][col] = itemCode;
                     if (itemCode == 1)
                     {
+                        assert(row == 0 || row == rRows - 1 || col == 0 || col == rCols - 1);
                         entrances.add(new Position(row, col));
                     }
                     //constData[w][h] = GameObject.gameObjectFromCode(itemCode);
