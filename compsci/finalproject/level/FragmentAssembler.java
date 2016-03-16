@@ -42,8 +42,8 @@ public class FragmentAssembler
         int dimBase = 40 * difficulty;
         double monsterScale = difficulty * difficulty;
         double ilvl = difficulty * Math.log10(difficulty);
-        int width = (int)((Math.random() / 2.5) + 0.75) * dimBase;
-        int height = (int)((Math.random() / 2.5) + 0.75) * dimBase;
+        int width = (int)(((Math.random() / 2) + 0.75) * dimBase);
+        int height = (int)(((Math.random() / 2) + 0.75) * dimBase);
         assert(width > 0);
         assert(height > 0);
         short[][] levelMap = new short[width][height];
