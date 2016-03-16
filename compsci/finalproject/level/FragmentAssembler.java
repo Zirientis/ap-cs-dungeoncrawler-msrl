@@ -49,10 +49,13 @@ public class FragmentAssembler
         short[][] levelMap = new short[width][height];
         safeRoomsRemaining = (int)Math.ceil(10.0 / difficulty);
         // Now put rooms on the map Yay T_T
-        
+
         Room firstRoom = getRoom(getIsNextRoomSafe());
         int firstX = (int)(Math.random() * (width - firstRoom.getWidth()));
         int firstY = (int)(Math.random() * (height - firstRoom.getHeight()));
+        copyData(firstRoom, levelMap, firstX, firstY);
+
+        ArrayList<Position> highPriorityEntrances = new ArrayList<Position>(firstRoom.getEntrances());
         return null;
     }
     
@@ -75,7 +78,7 @@ public class FragmentAssembler
             {
                 r = safeRooms.get((int)(Math.random() * safeRooms.size()));
             }
-            while (r.getWidth() <= maxWidth && r.getHeight() <= maxHeight);
+            while (r.getWidth() > maxWidth && r.getHeight() > maxHeight);
             return r;
             // TODO: Allow rotation of rooms
         }
