@@ -47,7 +47,7 @@ public class FragmentAssembler
         assert(width > 0);
         assert(height > 0);
         short[][] levelMap = new short[width][height];
-        int safeRooms = (int)Math.ceil(10.0 / difficulty);
+        safeRoomsRemaining = (int)Math.ceil(10.0 / difficulty);
         // Now put rooms on the map Yay T_T
         
         Room firstRoom = getRoom(getIsNextRoomSafe());
