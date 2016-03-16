@@ -55,7 +55,7 @@ public class FragmentAssembler
         int firstY = (int)(Math.random() * (height - firstRoom.getHeight()));
         copyData(firstRoom, levelMap, firstX, firstY);
 
-        ArrayList<Position> highPriorityEntrances = new ArrayList<Position>(firstRoom.getEntrances());
+        ArrayList<Position> highPriorityEntrances = firstRoom.getEntrances();
         return null;
     }
     
