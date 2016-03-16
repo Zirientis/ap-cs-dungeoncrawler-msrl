@@ -14,10 +14,12 @@ public class Room
 {
     private short[][] constData;
     private boolean safe;
+    private ArrayList<Position> entrances;
     
     private Room(Scanner s)
     {
         // set safe in constructor
+        entrances = new ArrayList<Position>();
         try
         {
             int rRows = s.nextInt();
@@ -32,6 +34,10 @@ public class Room
                 {
                     short itemCode = s.nextShort(36);
                     constData[row][col] = itemCode;
+                    if (itemCode == 1)
+                    {
+                        entrances.add(new Position(row, col));
+                    }
                     //constData[w][h] = GameObject.gameObjectFromCode(itemCode);
                 }
             }
@@ -87,5 +93,10 @@ public class Room
             }
         }
         return out;
+    }
+
+    public ArrayList<Position> getEntrances()
+    {
+        return new ArrayList<Position>(entrances);
     }
 }
