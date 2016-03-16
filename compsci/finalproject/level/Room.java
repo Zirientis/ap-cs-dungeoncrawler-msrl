@@ -12,7 +12,7 @@ import compsci.finalproject.gameobject.*;
  */
 public class Room
 {
-    private byte[][] constData;
+    private short[][] constData;
     private boolean safe;
     
     private Room(Scanner s)
@@ -20,18 +20,18 @@ public class Room
         // set safe in constructor
         try
         {
-            int roomWidth = s.nextInt();
-            int roomHeight = s.nextInt();
+            int rRows = s.nextInt();
+            int rCols = s.nextInt();
             String flags = s.next();
             if (flags.indexOf('s') >= 0)
                 safe = true;
-            constData = new byte[roomWidth][roomHeight];
-            for (int w = 0; w < roomWidth; w++)
+            constData = new short[rRows][rCols];
+            for (int row = 0; row < rRows; row++)
             {
-                for (int h = 0; h < roomHeight; h++)
+                for (int col = 0; col < rCols; col++)
                 {
-                    byte itemCode = s.nextByte();
-                    constData[w][h] = itemCode;
+                    short itemCode = s.nextShort(36);
+                    constData[row][col] = itemCode;
                     //constData[w][h] = GameObject.gameObjectFromCode(itemCode);
                 }
             }
@@ -40,6 +40,7 @@ public class Room
         {
             // File format error
             System.out.println("Error parsing room file");
+            System.out.println("Next token was: " + s.next());
             throw e;
         }
         catch (NoSuchElementException e)
@@ -67,17 +68,17 @@ public class Room
     
     public int getWidth()
     {
-        return constData[0].length;
+        return constData.length;
     }
     
     public int getHeight()
     {
-        return constData.length;
+        return constData[0].length;
     }
     
-    public byte[][] getData()
+    public short[][] getData()
     {
-        byte[][] out = new byte[getWidth()][getHeight()];
+        short[][] out = new short[getWidth()][getHeight()];
         for (int w = 0; w < getWidth(); w++)
         {
             for (int h = 0; h < getHeight(); h++)

@@ -44,7 +44,7 @@ public class FragmentAssembler
         double ilvl = difficulty * Math.log10(difficulty);
         int width = (int)(Math.random() / 2.5 + 0.75) * dimBase;
         int height = (int)(Math.random() / 2.5 + 0.75) * dimBase;
-        byte[][] levelMap = new byte[width][height];
+        short[][] levelMap = new short[width][height];
         int safeRooms = (int)Math.ceil(10.0 / difficulty);
         // Now put rooms on the map Yay T_T
         
@@ -85,12 +85,12 @@ public class FragmentAssembler
         }
     }
     
-    private void copyData(Room from, byte[][] map, int startX, int startY)
+    private void copyData(Room from, short[][] map, int startR, int startC)
     {
-        byte[][] data = from.getData();
-        for (int w = startX; w < data[0].length; w++)
+        short[][] data = from.getData();
+        for (int w = startR; w < data[0].length; w++)
         {
-            for (int h = startY; h < data.length; h++)
+            for (int h = startC; h < data.length; h++)
             {
                 assert(map[w][h] == 0);
                 map[w][h] = data[w][h];
