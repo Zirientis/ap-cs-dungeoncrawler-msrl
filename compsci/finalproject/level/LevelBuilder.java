@@ -132,12 +132,21 @@ public class LevelBuilder
                             
                         }
                     }
-                    
+
                     roomsTopLeft.add(new Position(curHeight, curWidth));
                     //curHeight += roomHeight;
                     sortedInsert(minHeights, new Position(curHeight + roomHeight, curWidth));
                     curWidth += roomWidth;
                     roomsBottomRight.add(new Position(curHeight + roomHeight, curWidth));
+                }
+
+                for (short[] row : levelMap)
+                {
+                    for (short cell : row)
+                    {
+                        System.out.print(cell);
+                    }
+                    System.out.println();
                 }
                 if (curWidth > width)
                     break;
@@ -149,15 +158,6 @@ public class LevelBuilder
         
         int spawnX = (int)(randomSource.nextDouble() * width);
         int spawnY = (int)(randomSource.nextDouble() * height);
-
-        for (short[] row : levelMap)
-        {
-            for (short cell : row)
-            {
-                System.out.print(cell);
-            }
-            System.out.println();
-        }
         
         System.out.println("roomsTopLeft: " + roomsTopLeft);
         System.out.println("roomsBottomRight: " + roomsBottomRight);
