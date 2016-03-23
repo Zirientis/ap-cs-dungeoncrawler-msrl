@@ -4,7 +4,7 @@ package compsci.finalproject.level;
 import java.util.*;
 public class LevelBuilder
 {
-    public static Level build(int difficulty, int seed)
+    public static Level build(int difficulty, long seed)
     {
         /*
          * Dungeon dimension scaling: n
@@ -34,20 +34,24 @@ public class LevelBuilder
         ArrayList<Position> roomsBottomRight = new ArrayList<Position>();
         // Pass 1
         {
+            System.out.println("Beginning pass 1");
             ArrayList<Position> minHeights = new ArrayList<Position>();
             minHeights.add(new Position(0, 0));
             while (minHeights.get(0).getRow() < height)
             {
+                System.out.println("Outer loop");
                 int curWidth = minHeights.get(0).getCol();
                 int curHeight = minHeights.remove(0).getRow();
                 while (curWidth < width)
                 {
+                    System.out.println("Inner loop");
                     double rand = randomSource.nextDouble();
     
                     int roomHeight = 0;
                     int roomWidth = 0;
                     if (rand < 0.1) // Small room
                     {
+                        System.out.println("Small room");
                         // Minimum dimension is 6x6 (4x4), due to shrinkage
                         // Maximum dimension is 12x12 (10x10)
                         roomHeight = (int)(randomSource.nextDouble() * 7 + 6);
@@ -55,6 +59,7 @@ public class LevelBuilder
                     }
                     else if (rand > 0.95) // Large room
                     {
+                        System.out.println("Large room");
                         // Minimum dimension is 22x22 (20x20)
                         // Maximum dimension is 32x32 (30x30)
                         roomHeight = (int)(randomSource.nextDouble() * 11 + 22);
@@ -62,6 +67,7 @@ public class LevelBuilder
                     }
                     else // Normal room
                     {
+                        System.out.println("Normal room");
                         // Minimum dimension is 12x12 (10x10)
                         // Maximum dimension is 22x22 (20x20)
                         roomHeight = (int)(randomSource.nextDouble() * 11 + 12);
@@ -70,6 +76,7 @@ public class LevelBuilder
     
                     if (curHeight + roomHeight >= height)
                     {
+                        System.out.println("Overshot height");
                         int overshoot = (curHeight + roomHeight) - height + 1;
                         assert(overshoot > 0);
                         roomHeight -= overshoot;
@@ -77,6 +84,7 @@ public class LevelBuilder
     
                     if (curWidth + roomWidth >= width)
                     {
+                        System.out.println("Overshot width");
                         int overshoot = (curWidth + roomWidth) - width + 1;
                         assert(overshoot > 0);
                         roomWidth -= overshoot;
@@ -98,6 +106,7 @@ public class LevelBuilder
                     
                     if (roomHeight <= 0 || roomWidth <= 0)
                     {
+                        System.out.println("Imaginary room");
                         break;
                     }
                     
@@ -105,10 +114,11 @@ public class LevelBuilder
                     {
                         for (int c = curWidth; c < curWidth + roomWidth; c++)
                         {
-                            System.out.printf("Now setting (%d, %d) ", r, c);
+                            //System.out.printf("Now setting (%d, %d) ", r, c);
                             try
                             {
-                                levelMap[r][c] = 1;
+                                if (r == curHeight || r == curHeight + roomHeight - 1 || c == curWidth || c == curWidth + roomWidth - 1)
+                                    levelMap[r][c] = 1;
                             }
                             catch (ArrayIndexOutOfBoundsException e)
                             {
@@ -117,17 +127,17 @@ public class LevelBuilder
                             }
                             finally
                             {
-                                System.out.println();
+                                //System.out.println();
                             }
                             
                         }
                     }
                     
                     roomsTopLeft.add(new Position(curHeight, curWidth));
-                    curHeight += roomHeight;
-                    sortedInsert(minHeights, new Position(curHeight, curWidth));
+                    //curHeight += roomHeight;
+                    sortedInsert(minHeights, new Position(curHeight + roomHeight, curWidth));
                     curWidth += roomWidth;
-                    roomsBottomRight.add(new Position(curHeight, curWidth));
+                    roomsBottomRight.add(new Position(curHeight + roomHeight, curWidth));
                 }
                 if (curWidth > width)
                     break;
