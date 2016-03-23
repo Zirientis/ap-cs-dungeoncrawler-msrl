@@ -132,12 +132,12 @@ public class LevelBuilder
                             
                         }
                     }
-
                     roomsTopLeft.add(new Position(curHeight, curWidth));
                     //curHeight += roomHeight;
                     sortedInsert(minHeights, new Position(curHeight + roomHeight, curWidth));
                     curWidth += roomWidth;
                     roomsBottomRight.add(new Position(curHeight + roomHeight, curWidth));
+                    curHeight += roomHeight;
                 }
 
                 for (short[] row : levelMap)
@@ -166,7 +166,6 @@ public class LevelBuilder
 
     private static void sortedInsert(ArrayList<Position> arr, Position pos)
     {
-        /*
         // Precondition
         if (arr.size() == 0)
         {
@@ -177,33 +176,19 @@ public class LevelBuilder
         for (int i = 0; i < arr.size(); i++)
         {
             Position pAtI = arr.get(i);
-            if (pAtI.getRow() > pos.getRow())
-            {
-                arr.add(i, pos); // Add before pAtI
-            }
-            else if (pAtI.getRow() == pos.getRow())
-            {
-                if (pAtI.getCol() > pos.getCol())
-                {
-                    arr.add(i, pos); // Add before pAtI
-                }
-                else if (pAtI.getCol() < pos.getCol())
-                {
-                    arr.add(i + 1, pos); // Add after pAtI
-                }
+            if (pos.getRow() < pAtI.getRow())
+                arr.add(i, pos);
+            else if (pos.getRow() == pAtI.getRow())
+                if (pos.getCol() < pAtI.getCol())
+                    arr.add(i, pos);
                 else
-                {
-                    assert(false);
-                }
-            }
-            else // pAtI.getRow() < pos.getRow()
-            {
+                    continue;
+            else
                 continue;
-            }
         }
-        */
-       arr.add(pos);
-       arr.sort(null);
+        
+       //arr.add(pos);
+       //arr.sort(null);
     }
 
     private static void debugPrint(String s)
