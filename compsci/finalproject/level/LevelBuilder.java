@@ -34,24 +34,24 @@ public class LevelBuilder
         ArrayList<Position> roomsBottomRight = new ArrayList<Position>();
         // Pass 1
         {
-            System.out.println("Beginning pass 1");
+            debugPrint("Beginning pass 1");
             ArrayList<Position> minHeights = new ArrayList<Position>();
             minHeights.add(new Position(0, 0));
             while (minHeights.get(0).getRow() < height)
             {
-                System.out.println("Outer loop");
+                debugPrint("Outer loop");
                 int curWidth = minHeights.get(0).getCol();
                 int curHeight = minHeights.remove(0).getRow();
                 while (curWidth < width)
                 {
-                    System.out.println("Inner loop");
+                    debugPrint("Inner loop");
                     double rand = randomSource.nextDouble();
     
                     int roomHeight = 0;
                     int roomWidth = 0;
                     if (rand < 0.1) // Small room
                     {
-                        System.out.println("Small room");
+                        debugPrint("Small room");
                         // Minimum dimension is 6x6 (4x4), due to shrinkage
                         // Maximum dimension is 12x12 (10x10)
                         roomHeight = (int)(randomSource.nextDouble() * 7 + 6);
@@ -59,7 +59,7 @@ public class LevelBuilder
                     }
                     else if (rand > 0.95) // Large room
                     {
-                        System.out.println("Large room");
+                        debugPrint("Large room");
                         // Minimum dimension is 22x22 (20x20)
                         // Maximum dimension is 32x32 (30x30)
                         roomHeight = (int)(randomSource.nextDouble() * 11 + 22);
@@ -67,7 +67,7 @@ public class LevelBuilder
                     }
                     else // Normal room
                     {
-                        System.out.println("Normal room");
+                        debugPrint("Normal room");
                         // Minimum dimension is 12x12 (10x10)
                         // Maximum dimension is 22x22 (20x20)
                         roomHeight = (int)(randomSource.nextDouble() * 11 + 12);
@@ -76,7 +76,7 @@ public class LevelBuilder
     
                     if (curHeight + roomHeight >= height)
                     {
-                        System.out.println("Overshot height");
+                        debugPrint("Overshot height");
                         int overshoot = (curHeight + roomHeight) - height + 1;
                         assert(overshoot > 0);
                         roomHeight -= overshoot;
@@ -84,7 +84,7 @@ public class LevelBuilder
     
                     if (curWidth + roomWidth >= width)
                     {
-                        System.out.println("Overshot width");
+                        debugPrint("Overshot width");
                         int overshoot = (curWidth + roomWidth) - width + 1;
                         assert(overshoot > 0);
                         roomWidth -= overshoot;
@@ -106,7 +106,7 @@ public class LevelBuilder
                     
                     if (roomHeight <= 0 || roomWidth <= 0)
                     {
-                        System.out.println("Imaginary room");
+                        debugPrint("Imaginary room");
                         break;
                     }
                     
@@ -204,5 +204,18 @@ public class LevelBuilder
         */
        arr.add(pos);
        arr.sort(null);
+    }
+
+    private static void debugPrint(String s)
+    {
+        System.out.println(s);
+        try
+        {
+            Thread.sleep(50);
+        }
+        catch (InterruptedException e)
+        {
+
+        }
     }
 }
