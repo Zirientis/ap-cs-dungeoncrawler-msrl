@@ -42,9 +42,9 @@ public class Position implements Comparable
                 if (col == other.col)
                     return 0;
                 else
-                    return other.col - col;
+                    return col - other.col;
             else
-                return other.row - row;
+                return row - other.row;
         }
         throw new IllegalArgumentException();
    }
