@@ -30,26 +30,34 @@ public class LevelBuilder
         System.out.println("Width: " + width);
         System.out.println("Height: " + height);
         short[][] levelMap = new short[height][width];
+        for (short[] row : levelMap)
+        {
+            for (int i = 0; i < row.length; i++)
+            {
+                row[i] = ' ';
+            }
+        }
         ArrayList<Position> roomsTopLeft = new ArrayList<Position>();
         ArrayList<Position> roomsBottomRight = new ArrayList<Position>();
         // Pass 1
         {
+            char debugMarker = 'a';
             debugPrint("Beginning pass 1");
             ArrayList<Position> minHeights = new ArrayList<Position>();
             minHeights.add(new Position(0, 0));
-            while (minHeights.get(0).getRow() < height)
+            while (minHeights.get(0).getCol() < width)
             {
                 debugPrint("Outer loop");
                 int curWidth = minHeights.get(0).getCol();
                 int curHeight = minHeights.remove(0).getRow();
+                int roomHeight = 0;
+                int roomWidth = 0;
                 while (curWidth < width)
                 {
                     debugPrint("Inner loop");
                     double rand = randomSource.nextDouble();
     
-                    int roomHeight = 0;
-                    int roomWidth = 0;
-                    if (rand < 0.1) // Small room
+                    if (rand < 0.05) // Small room
                     {
                         debugPrint("Small room");
                         // Minimum dimension is 6x6 (4x4), due to shrinkage
@@ -110,6 +118,8 @@ public class LevelBuilder
                         break;
                     }
                     
+                    debugPrint("curHeight " + curHeight);
+                    debugPrint("curWidth " + curWidth);
                     for (int r = curHeight; r < curHeight + roomHeight; r++)
                     {
                         for (int c = curWidth; c < curWidth + roomWidth; c++)
@@ -118,7 +128,7 @@ public class LevelBuilder
                             try
                             {
                                 if (r == curHeight || r == curHeight + roomHeight - 1 || c == curWidth || c == curWidth + roomWidth - 1)
-                                    levelMap[r][c] = 1;
+                                    levelMap[r][c] = (short)debugMarker;
                             }
                             catch (ArrayIndexOutOfBoundsException e)
                             {
@@ -132,22 +142,28 @@ public class LevelBuilder
                             
                         }
                     }
+                    //if (curHeight == 0)
+                    //    sortedInsert(minHeights, new Position(curHeight, curWidth + roomWidth));
                     roomsTopLeft.add(new Position(curHeight, curWidth));
                     //curHeight += roomHeight;
                     sortedInsert(minHeights, new Position(curHeight + roomHeight, curWidth));
-                    curWidth += roomWidth;
+                    //if (curHeight == 0)
+                        curWidth += roomWidth;
                     roomsBottomRight.add(new Position(curHeight + roomHeight, curWidth));
-                    curHeight += roomHeight;
+                    if (curHeight != 0)
+                        break;
+                    //curHeight += roomHeight;
                 }
-
+                curHeight += roomHeight;
                 for (short[] row : levelMap)
                 {
                     for (short cell : row)
                     {
-                        System.out.print(cell);
+                        System.out.print((char)cell);
                     }
                     System.out.println();
                 }
+                debugMarker++;
                 if (curWidth > width)
                     break;
                 if (minHeights.size() == 0)
@@ -177,10 +193,16 @@ public class LevelBuilder
         {
             Position pAtI = arr.get(i);
             if (pos.getRow() < pAtI.getRow())
+            {
                 arr.add(i, pos);
+                return;
+            }
             else if (pos.getRow() == pAtI.getRow())
                 if (pos.getCol() < pAtI.getCol())
+                {
                     arr.add(i, pos);
+                    return;
+                }
                 else
                     continue;
             else
@@ -194,6 +216,7 @@ public class LevelBuilder
     private static void debugPrint(String s)
     {
         System.out.println(s);
+        /*
         try
         {
             Thread.sleep(50);
@@ -202,5 +225,6 @@ public class LevelBuilder
         {
 
         }
+        */
     }
 }
