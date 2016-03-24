@@ -45,18 +45,21 @@ public class LevelBuilder
             debugPrint("Beginning pass 1");
             ArrayList<Position> minHeights = new ArrayList<Position>();
             minHeights.add(new Position(0, 0));
-            while (minHeights.get(0).getCol() < width)
+            while (minHeights.get(0).getRow() < height)
             {
                 debugPrint("Outer loop");
                 int curWidth = minHeights.get(0).getCol();
                 int curHeight = minHeights.remove(0).getRow();
+                //int curWidth = 0;
+                //int curHeight = 0;
                 int roomHeight = 0;
                 int roomWidth = 0;
                 while (curWidth < width)
                 {
                     debugPrint("Inner loop");
                     double rand = randomSource.nextDouble();
-    
+                    //curWidth = minHeights.get(0).getCol();
+                    //curHeight = minHeights.remove(0).getRow();
                     if (rand < 0.05) // Small room
                     {
                         debugPrint("Small room");
@@ -142,16 +145,16 @@ public class LevelBuilder
                             
                         }
                     }
-                    //if (curHeight == 0)
-                    //    sortedInsert(minHeights, new Position(curHeight, curWidth + roomWidth));
+                    if (curHeight == 0)
+                        sortedInsert(minHeights, new Position(curHeight, curWidth + roomWidth));
                     roomsTopLeft.add(new Position(curHeight, curWidth));
                     //curHeight += roomHeight;
                     sortedInsert(minHeights, new Position(curHeight + roomHeight, curWidth));
                     //if (curHeight == 0)
-                        curWidth += roomWidth;
+                    curWidth += roomWidth;
                     roomsBottomRight.add(new Position(curHeight + roomHeight, curWidth));
-                    if (curHeight != 0)
-                        break;
+                    //if (curHeight != 0)
+                    //    break;
                     //curHeight += roomHeight;
                 }
                 curHeight += roomHeight;
