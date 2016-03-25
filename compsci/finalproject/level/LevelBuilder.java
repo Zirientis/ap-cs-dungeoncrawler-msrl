@@ -216,8 +216,8 @@ public class LevelBuilder
                 continue;
         }
         
-       //arr.add(pos);
-       //arr.sort(null);
+        //arr.add(pos);
+        //arr.sort(null);
     }
 
     private static void debugPrint(String s)
