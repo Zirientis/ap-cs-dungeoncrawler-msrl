@@ -7,10 +7,10 @@ public class LevelBuilder
     public static Level build(int difficulty, long seed)
     {
         /*
-         * Dungeon dimension scaling: n
+         * Dungeon dimension scaling: log(n)
          * Monster difficulty: n^2
          * Item level: n log(n)
-         * Overall: n^2/log(n)
+         * Overall: n
          */
         if (difficulty == Integer.MAX_VALUE)
             for (;;)
@@ -18,7 +18,7 @@ public class LevelBuilder
 
         Random randomSource = new Random(seed);
         System.out.println(randomSource.nextDouble());
-        int dimBase = 25 * difficulty;
+        double dimBase = 50 * Math.log10(difficulty) + 1;
         double monsterScale = difficulty * difficulty;
         double ilvl = difficulty * Math.log10(difficulty);
         int width = (int)(((randomSource.nextDouble() / 2) + 0.75) * dimBase);
