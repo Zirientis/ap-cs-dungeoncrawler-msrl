@@ -60,8 +60,10 @@ public class LevelBuilder
                 {
                     debugPrint("Inner loop");
                     double rand = randomSource.nextDouble();
-                    //curWidth = nextHeight.get(0).getCol();
-                    //curHeight = nextHeight.remove(0).getRow();
+                    roomHeight = 0;
+                    roomWidth = 0;
+                    //curWidth = minHeights.get(0).getCol();
+                    //curHeight = minHeights.remove(0).getRow();
                     if (rand > 0.95) // Large room
                     {
                         debugPrint("Large room");
