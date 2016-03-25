@@ -172,7 +172,8 @@ public class LevelBuilder
         
         System.out.println("roomsTopLeft: " + roomsTopLeft);
         System.out.println("roomsBottomRight: " + roomsBottomRight);
-        return null;
+
+        return new Level(levelMap);
     }
 
     private static void sortedInsert(ArrayList<Position> arr, Position pos)
