@@ -49,7 +49,11 @@ public class LevelBuilder
             {
                 debugPrint("Outer loop");
                 int curWidth = nextHeight.get(0).getCol();
+                //if (curWidth > 0)
+                //    curWidth--;
                 int curHeight = nextHeight.remove(0).getRow();
+                if (curHeight > 0)
+                    curHeight--;
                 debugPrint("curWidth SET to " + curWidth);
                 debugPrint("curHeight SET to " + curHeight);
                 //int curWidth = 0;
@@ -111,7 +115,7 @@ public class LevelBuilder
                     }
                     */
                     
-                    if (roomHeight <= 0 || roomWidth <= 0)
+                    if (roomHeight <= 2 || roomWidth <= 2)
                     {
                         debugPrint("Imaginary room");
                         break;
@@ -147,7 +151,7 @@ public class LevelBuilder
                     //curHeight += roomHeight;
                     sortedInsert(nextHeight, new Position(curHeight + roomHeight, curWidth));
                     //if (curHeight == 0)
-                    curWidth += roomWidth; // TODO: Should change to remove "double walls" but avoid infinite loop.
+                    curWidth += (roomWidth - 1);
                     roomsBottomRight.add(new Position(curHeight + roomHeight, curWidth));
                     //if (curHeight != 0)
                     //    break;
