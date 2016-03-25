@@ -46,18 +46,11 @@ public class LevelBuilder
                 {
                     debugPrint("Inner loop");
                     double rand = randomSource.nextDouble();
-    
                     int roomHeight = 0;
                     int roomWidth = 0;
-                    if (rand < 0.1) // Small room
-                    {
-                        debugPrint("Small room");
-                        // Minimum dimension is 6x6 (4x4), due to shrinkage
-                        // Maximum dimension is 12x12 (10x10)
-                        roomHeight = (int)(randomSource.nextDouble() * 7 + 6);
-                        roomWidth = (int)(randomSource.nextDouble() * 7 + 6);
-                    }
-                    else if (rand > 0.95) // Large room
+                    //curWidth = minHeights.get(0).getCol();
+                    //curHeight = minHeights.remove(0).getRow();
+                    if (rand > 0.95) // Large room
                     {
                         debugPrint("Large room");
                         // Minimum dimension is 22x22 (20x20)
