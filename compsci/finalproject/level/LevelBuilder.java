@@ -43,13 +43,15 @@ public class LevelBuilder
         {
             char debugMarker = 'a';
             debugPrint("Beginning pass 1");
-            ArrayList<Position> minHeights = new ArrayList<Position>();
-            minHeights.add(new Position(0, 0));
-            while (minHeights.get(0).getRow() < height)
+            ArrayList<Position> nextHeight = new ArrayList<Position>();
+            nextHeight.add(new Position(0, 0));
+            while (nextHeight.get(0).getRow() < height)
             {
                 debugPrint("Outer loop");
-                int curWidth = minHeights.get(0).getCol();
-                int curHeight = minHeights.remove(0).getRow();
+                int curWidth = nextHeight.get(0).getCol();
+                int curHeight = nextHeight.remove(0).getRow();
+                debugPrint("curWidth SET to " + curWidth);
+                debugPrint("curHeight SET to " + curHeight);
                 //int curWidth = 0;
                 //int curHeight = 0;
                 int roomHeight = 0;
@@ -58,8 +60,8 @@ public class LevelBuilder
                 {
                     debugPrint("Inner loop");
                     double rand = randomSource.nextDouble();
-                    //curWidth = minHeights.get(0).getCol();
-                    //curHeight = minHeights.remove(0).getRow();
+                    //curWidth = nextHeight.get(0).getCol();
+                    //curHeight = nextHeight.remove(0).getRow();
                     if (rand > 0.95) // Large room
                     {
                         debugPrint("Large room");
@@ -138,12 +140,12 @@ public class LevelBuilder
                         }
                     }
                     if (curHeight == 0)
-                        sortedInsert(minHeights, new Position(curHeight, curWidth + roomWidth));
+                        sortedInsert(nextHeight, new Position(curWidth + roomWidth, curHeight));
                     roomsTopLeft.add(new Position(curHeight, curWidth));
                     //curHeight += roomHeight;
-                    sortedInsert(minHeights, new Position(curHeight + roomHeight, curWidth));
+                    sortedInsert(nextHeight, new Position(curHeight + roomHeight, curWidth));
                     //if (curHeight == 0)
-                    curWidth += roomWidth;
+                    curWidth += roomWidth; // TODO: Should change to remove "double walls" but avoid infinite loop.
                     roomsBottomRight.add(new Position(curHeight + roomHeight, curWidth));
                     //if (curHeight != 0)
                     //    break;
@@ -161,7 +163,7 @@ public class LevelBuilder
                 debugMarker++;
                 if (curWidth > width)
                     break;
-                if (minHeights.size() == 0)
+                if (nextHeight.size() == 0)
                     break;
             }
         }
@@ -182,6 +184,7 @@ public class LevelBuilder
         if (arr.size() == 0)
         {
             arr.add(pos);
+            debugPrint("added " + pos + " to nextHeight");
             return;
         }
         
@@ -191,12 +194,14 @@ public class LevelBuilder
             if (pos.getRow() < pAtI.getRow())
             {
                 arr.add(i, pos);
+                debugPrint("added " + pos + " to nextHeight");
                 return;
             }
             else if (pos.getRow() == pAtI.getRow())
                 if (pos.getCol() < pAtI.getCol())
                 {
                     arr.add(i, pos);
+                    debugPrint("added " + pos + " to nextHeight");
                     return;
                 }
                 else
