@@ -141,8 +141,8 @@ public class LevelBuilder
                             
                         }
                     }
-                    if (curHeight == 0)
-                        sortedInsert(nextHeight, new Position(curWidth + roomWidth, curHeight));
+                    //if (curHeight == 0)
+                    //    sortedInsert(nextHeight, new Position(curWidth + roomWidth, curHeight));
                     roomsTopLeft.add(new Position(curHeight, curWidth));
                     //curHeight += roomHeight;
                     sortedInsert(nextHeight, new Position(curHeight + roomHeight, curWidth));
