@@ -18,7 +18,7 @@ public class LevelBuilder
 
         Random randomSource = new Random(seed);
         System.out.println(randomSource.nextDouble());
-        int dimBase = 40 * difficulty;
+        int dimBase = 25 * difficulty;
         double monsterScale = difficulty * difficulty;
         double ilvl = difficulty * Math.log10(difficulty);
         int width = (int)(((randomSource.nextDouble() / 2) + 0.75) * dimBase);
